@@ -11,10 +11,14 @@ import okhttp3.Route
 object TokenAuthenticator : Authenticator {
     private const val API_KEY_HEADER = "X-Api-Key"
 
-    override fun authenticate(route: Route?, response: Response): Request {
-        return response.request
-            .newBuilder()
-            .addHeader(API_KEY_HEADER, applicationContext.getString(R.string.news_api_key))
-            .build()
+    override fun authenticate(route: Route?, response: Response): Request? {
+        return if (response.priorResponse != null) {
+            response.request
+                .newBuilder()
+                .addHeader(API_KEY_HEADER, applicationContext.getString(R.string.news_api_key))
+                .build()
+        } else {
+            null
+        }
     }
 }
