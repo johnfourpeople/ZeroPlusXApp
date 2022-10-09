@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.parcelable
+package com.zeroplusx.mobile.ui.core.parceler
 
 import android.os.Parcel
 import com.zeroplusx.mobile.domain.model.Source

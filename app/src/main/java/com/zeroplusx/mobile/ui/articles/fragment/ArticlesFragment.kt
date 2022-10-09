@@ -23,7 +23,7 @@ import com.zeroplusx.mobile.ui.articles.adapter.item.ProgressItem
 import com.zeroplusx.mobile.ui.articles.adapter.item.SmallErrorItem
 import com.zeroplusx.mobile.ui.articles.adapter.item.SmallProgressItem
 import com.zeroplusx.mobile.ui.articles.viewModel.ArticlesViewModel
-import com.zeroplusx.mobile.ui.model.SourceWrapper
+import com.zeroplusx.mobile.ui.core.model.SourceWrapper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

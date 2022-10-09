@@ -18,7 +18,7 @@ import com.zeroplusx.mobile.ui.articles.adapter.delegate.ProgressDelegate
 import com.zeroplusx.mobile.ui.articles.adapter.item.ErrorItem
 import com.zeroplusx.mobile.ui.articles.adapter.item.ProgressItem
 import com.zeroplusx.mobile.ui.articles.fragment.ArticlesFragment
-import com.zeroplusx.mobile.ui.model.SourceWrapper
+import com.zeroplusx.mobile.ui.core.model.SourceWrapper
 import com.zeroplusx.mobile.ui.sources.adapter.delegate.SourceDelegate
 import com.zeroplusx.mobile.ui.sources.adapter.item.SourceItem
 import com.zeroplusx.mobile.ui.sources.viewModel.SourcesViewModel
