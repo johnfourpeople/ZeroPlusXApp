@@ -2,6 +2,7 @@ package com.zeroplusx.mobile.ui.listing.adapter.delegate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.zeroplusx.mobile.R
@@ -19,13 +20,22 @@ class ArticleDelegate : BaseItemDelegate<ArticleItem, BindingViewHolder<WidgetAr
     }
 
     override fun bind(holder: BindingViewHolder<WidgetArticleBinding>, item: ArticleItem) {
-        holder.binding.titleView.text = item.article.title
-        holder.binding.descriptionView.text = item.article.description
-        holder.binding.authorView.text = item.article.author
-        holder.binding.publishedDayView.text = item.article.publishedDay
-        holder.binding.thumbnailView.load(
-            item.article.thumbnail,
-            builder = { placeholder(R.drawable.image_placeholder) })
+        with(holder.binding) {
+            titleView.text = item.article.title
+            descriptionView.text = item.article.description
+            authorView.text = item.article.author
+            publishedDayView.text = item.article.publishedDay.toString()
+            publishedDayView.isVisible = item.article.publishedDay != null
+            if (!item.article.thumbnail.isNullOrEmpty()) {
+                thumbnailView.load(
+                    item.article.thumbnail,
+                    builder = { placeholder(R.drawable.image_placeholder) })
+                thumbnailView.isVisible = true
+            } else {
+                thumbnailView.isVisible = false
+            }
+
+        }
         holder.setData(item.article)
     }
 
