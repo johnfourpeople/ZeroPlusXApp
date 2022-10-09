@@ -18,5 +18,14 @@ abstract class BaseItemDelegate<Item, ViewHolder : RecyclerView.ViewHolder>(
         bind(holder as ViewHolder, data as Item)
     }
 
+    fun getItemId(data: Any): Int {
+        @Suppress("UNCHECKED_CAST")
+        return itemId(data as Item)
+    }
+
     abstract fun bind(holder: ViewHolder, item: Item)
+
+    open fun itemId(item: Item) : Int {
+        return -1
+    }
 }

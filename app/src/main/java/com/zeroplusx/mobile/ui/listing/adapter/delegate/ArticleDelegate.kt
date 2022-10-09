@@ -28,4 +28,8 @@ class ArticleDelegate : BaseItemDelegate<ArticleItem, BindingViewHolder<WidgetAr
             builder = { placeholder(R.drawable.image_placeholder) })
         holder.setData(item.article)
     }
+
+    override fun itemId(item: ArticleItem): Int {
+        return item.article.hashCode()
+    }
 }

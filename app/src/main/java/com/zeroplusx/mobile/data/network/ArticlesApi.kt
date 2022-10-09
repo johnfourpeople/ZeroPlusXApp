@@ -10,8 +10,9 @@ interface ArticlesApi {
     @GET("/v2/top-headlines/sources")
     suspend fun getSources(): SourcesResponseDto
 
-    @GET("/v2/everything")
+    @GET("/v2/everything?pageSize=10")
     suspend fun getArticles(
         @Query("sources") sourceId: String,
+        @Query("page") page: Int,
     ): ArticleListResponseDto
 }

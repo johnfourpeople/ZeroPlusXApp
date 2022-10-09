@@ -15,9 +15,7 @@ class SourceDelegate(
 
     override fun onCreateViewHolder(parent: ViewGroup, inflater: LayoutInflater): RecyclerView.ViewHolder {
         return BindingViewHolder(WidgetSourceBinding.inflate(inflater, parent, false))
-            .also { viewHolder ->
-                viewHolder.itemView.setOnClickListener { onClick.invoke(viewHolder.requireData()) }
-            }
+            .apply { itemView.setOnClickListener { onClick.invoke(requireData()) } }
     }
 
     override fun bind(holder: BindingViewHolder<WidgetSourceBinding>, item: SourceItem) {

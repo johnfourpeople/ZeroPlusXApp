@@ -9,15 +9,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeroplusx.mobile.databinding.FragmentListBinding
+import com.zeroplusx.mobile.domain.interactor.ArticlesInteractor
+import com.zeroplusx.mobile.ui.core.OnBottomReachedListener
 import com.zeroplusx.mobile.ui.core.adapter.DelegateAdapter
 import com.zeroplusx.mobile.ui.listing.adapter.delegate.ArticleDelegate
 import com.zeroplusx.mobile.ui.listing.adapter.delegate.ErrorDelegate
 import com.zeroplusx.mobile.ui.listing.adapter.delegate.ProgressDelegate
+import com.zeroplusx.mobile.ui.listing.adapter.delegate.SmallErrorDelegate
+import com.zeroplusx.mobile.ui.listing.adapter.delegate.SmallProgressDelegate
 import com.zeroplusx.mobile.ui.listing.adapter.item.ArticleItem
 import com.zeroplusx.mobile.ui.listing.adapter.item.ErrorItem
 import com.zeroplusx.mobile.ui.listing.adapter.item.ProgressItem
+import com.zeroplusx.mobile.ui.listing.adapter.item.SmallErrorItem
+import com.zeroplusx.mobile.ui.listing.adapter.item.SmallProgressItem
 import com.zeroplusx.mobile.ui.listing.viewModel.ArticlesViewModel
-import com.zeroplusx.mobile.ui.listing.viewState.ArticleListViewState
 import com.zeroplusx.mobile.ui.model.SourceWrapper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -36,6 +41,7 @@ class ArticlesFragment : Fragment() {
     @Inject
     lateinit var viewModelAssistedFactory: ArticlesViewModel.Factory
 
+    @Suppress("Deprecation")
     private val viewModel: ArticlesViewModel by viewModels(
         factoryProducer = {
             ArticlesViewModel.provideFactory(
@@ -43,14 +49,6 @@ class ArticlesFragment : Fragment() {
                 checkNotNull(requireArguments().getParcelable<SourceWrapper>(SOURCE_ARG)?.source)
             )
         }
-    )
-
-    private val delegateAdapter = DelegateAdapter(
-        listOf(
-            ArticleDelegate(),
-            ProgressDelegate(),
-            ErrorDelegate()
-        )
     )
 
     override fun onCreateView(
@@ -65,17 +63,46 @@ class ArticlesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val delegateAdapter = DelegateAdapter(
+            listOf(
+                ArticleDelegate(),
+                ProgressDelegate(),
+                SmallProgressDelegate(),
+                SmallErrorDelegate(viewModel::onRetry),
+                ErrorDelegate(viewModel::onRetry),
+            )
+        )
+            .apply {
+                setHasStableIds(true)
+            }
+
         viewModel.articleListState
-            .onEach { viewState ->
-                delegateAdapter.data = when (viewState) {
-                    is ArticleListViewState.Articles -> {
-                        viewState.articles.map { ArticleItem(it) }
+            .onEach { state ->
+                delegateAdapter.data = when (state) {
+                    is ArticlesInteractor.State.Error -> {
+                        mutableListOf<Any>().apply {
+                            if (state.articles.isEmpty()) {
+                                add(ErrorItem(state.error))
+                            } else {
+                                state.articles.forEach { add(ArticleItem(it)) }
+                                add(SmallErrorItem(state.error))
+                            }
+
+                        }
                     }
-                    is ArticleListViewState.Error -> {
-                        listOf(ErrorItem(viewState.error))
+                    is ArticlesInteractor.State.Idle -> {
+                        state.articles.map { ArticleItem(it) }
                     }
-                    ArticleListViewState.Loading -> {
-                        listOf(ProgressItem)
+                    is ArticlesInteractor.State.Loading -> {
+                        mutableListOf<Any>().apply {
+                            if (state.articles.isEmpty()) {
+                                add(ProgressItem)
+                            } else {
+                                state.articles.forEach { add(ArticleItem(it)) }
+                                add(SmallProgressItem)
+                            }
+
+                        }
                     }
                 }
                 delegateAdapter.notifyDataSetChanged()
@@ -85,6 +112,7 @@ class ArticlesFragment : Fragment() {
         binding.listView.layoutManager = LinearLayoutManager(requireContext())
         binding.listView.setHasFixedSize(true)
         binding.listView.adapter = delegateAdapter
+        binding.listView.addOnScrollListener(OnBottomReachedListener { viewModel.onNextPage() })
     }
 
     override fun onDestroyView() {

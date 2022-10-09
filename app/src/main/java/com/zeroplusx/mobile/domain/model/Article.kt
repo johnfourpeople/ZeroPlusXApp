@@ -1,6 +1,6 @@
 package com.zeroplusx.mobile.domain.model
 
-class Article(
+data class Article(
     val title: String,
     val description: String,
     val thumbnail: String,

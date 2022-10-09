@@ -3,6 +3,7 @@ package com.zeroplusx.mobile.ui.sources.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zeroplusx.mobile.domain.interactor.SourcesInteractor
+import com.zeroplusx.mobile.domain.runCatchingWithoutCancellation
 import com.zeroplusx.mobile.ui.sources.viewState.SourcesViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -20,7 +21,7 @@ class SourcesViewModel @Inject constructor(interactor: SourcesInteractor) : View
 
     init {
         viewModelScope.launch {
-            kotlin.runCatching { interactor.getSources() }
+            runCatchingWithoutCancellation { interactor.getSources() }
                 .onSuccess { _sourcesState.value = SourcesViewState.Sources(it) }
                 .onFailure { throwable ->
                     if (throwable is CancellationException) {

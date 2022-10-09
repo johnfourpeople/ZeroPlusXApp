@@ -10,8 +10,8 @@ import javax.inject.Singleton
 @Singleton
 class ApiArticlesRepository @Inject constructor(private val api: ArticlesApi) : ArticlesRepository {
 
-    override suspend fun getArticles(source: Source): List<Article> {
-        return api.getArticles(source.id).articles.map { dto ->
+    override suspend fun getArticles(source: Source, page: Int): List<Article> {
+        return api.getArticles(source.id, page).articles.map { dto ->
             Article(
                 title = dto.title ?: "",
                 description = dto.description ?: "",

@@ -5,35 +5,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.zeroplusx.mobile.domain.interactor.ArticlesInteractor
 import com.zeroplusx.mobile.domain.model.Source
-import com.zeroplusx.mobile.ui.listing.viewState.ArticleListViewState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class ArticlesViewModel @AssistedInject constructor(
     @Assisted source: Source,
     articlesInteractor: ArticlesInteractor
 ) : ViewModel() {
 
-    private val _articleListState = MutableStateFlow<ArticleListViewState>(ArticleListViewState.Loading)
-    val articleListState: StateFlow<ArticleListViewState>
-        get() = _articleListState
+    private val articlesModel = articlesInteractor.getArticlesModel(source, viewModelScope)
+    val articleListState: StateFlow<ArticlesInteractor.State>
+        get() = articlesModel.state
 
-    init {
-        viewModelScope.launch {
-            kotlin.runCatching { articlesInteractor.getArticles(source) }
-                .onSuccess { _articleListState.value = ArticleListViewState.Articles(it) }
-                .onFailure { throwable ->
-                    if (throwable is CancellationException) {
-                        throw throwable
-                    }
-                    _articleListState.value = ArticleListViewState.Error(throwable)
-                }
-        }
+    fun onNextPage() {
+        articlesModel.nextPage.invoke()
+    }
+
+    fun onRetry() {
+        articlesModel.retry.invoke()
     }
 
     @AssistedFactory

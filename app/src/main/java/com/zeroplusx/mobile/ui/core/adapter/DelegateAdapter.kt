@@ -33,6 +33,13 @@ class DelegateAdapter(
         throw IllegalStateException("No delegate that could")
     }
 
+    override fun getItemId(position: Int): Long {
+        val viewType = getItemViewType(position)
+        val itemId = delegates[viewType].getItemId(data[position])
+        return (viewType.toLong() shl 32) or (itemId.toLong() and 0xFFFFFFFF)
+
+    }
+
     private fun getLayoutInflater(view: View): LayoutInflater {
         inflater?.let { return it }
         val newInflater = LayoutInflater.from(view.context)

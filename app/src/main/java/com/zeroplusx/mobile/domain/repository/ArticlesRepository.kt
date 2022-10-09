@@ -5,5 +5,5 @@ import com.zeroplusx.mobile.domain.model.Source
 
 interface ArticlesRepository {
 
-    suspend fun getArticles(source: Source): List<Article>
+    suspend fun getArticles(source: Source, page: Int): List<Article>
 }
