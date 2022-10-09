@@ -4,4 +4,5 @@
     <!-- Strings used for fragments for navigation -->
     <string name="sources_fragment_label">Sources</string>
     <string name="articles_fragment_label">Articles</string>
+    <string name="empty_label">There are no content</string>
 </resources>

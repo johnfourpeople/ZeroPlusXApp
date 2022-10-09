@@ -21,7 +21,7 @@ class ArticlesInteractor @Inject constructor(private val repository: ArticlesRep
             runCatchingWithoutCancellation {
                 repository.getArticles(source, startState.page)
             }
-                .onSuccess { mutableStateFlow.value = State.Idle(it, startState.page) }
+                .onSuccess { mutableStateFlow.value = State.Idle(it, startState.page, it.isNotEmpty()) }
                 .onFailure { mutableStateFlow.value = State.Error(startState.articles, startState.page, it) }
         }
 
@@ -35,7 +35,11 @@ class ArticlesInteractor @Inject constructor(private val repository: ArticlesRep
                     loadingJob = coroutineScope.launch {
                         runCatchingWithoutCancellation { repository.getArticles(source, newPage) }
                             .onSuccess { articles ->
-                                mutableStateFlow.value = State.Idle(currentState.articles + articles, newPage)
+                                mutableStateFlow.value = State.Idle(
+                                    currentState.articles + articles,
+                                    newPage,
+                                    articles.isNotEmpty()
+                                )
                             }
                             .onFailure { mutableStateFlow.value = State.Error(currentState.articles, newPage, it) }
                     }
@@ -48,7 +52,13 @@ class ArticlesInteractor @Inject constructor(private val repository: ArticlesRep
                     mutableStateFlow.value = State.Loading(currentState.articles, page)
                     loadingJob = coroutineScope.launch {
                         runCatchingWithoutCancellation { repository.getArticles(source, page) }
-                            .onSuccess { mutableStateFlow.value = State.Idle(currentState.articles + it, page) }
+                            .onSuccess { articles ->
+                                mutableStateFlow.value = State.Idle(
+                                    currentState.articles + articles,
+                                    page,
+                                    articles.isNotEmpty()
+                                )
+                            }
                             .onFailure { mutableStateFlow.value = State.Error(currentState.articles, page, it) }
                     }
                 }
@@ -63,7 +73,7 @@ class ArticlesInteractor @Inject constructor(private val repository: ArticlesRep
     )
 
     sealed class State(val articles: List<Article>, val page: Int) {
-        class Idle(articles: List<Article>, page: Int) : State(articles, page)
+        class Idle(articles: List<Article>, page: Int, val canLoadMore: Boolean) : State(articles, page)
         class Loading(articles: List<Article>, page: Int) : State(articles, page)
         class Error(articles: List<Article>, page: Int, val error: Throwable) : State(articles, page)
     }

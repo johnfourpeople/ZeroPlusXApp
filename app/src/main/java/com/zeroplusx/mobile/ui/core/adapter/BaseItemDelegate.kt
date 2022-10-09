@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseItemDelegate<Item, ViewHolder : RecyclerView.ViewHolder>(
+abstract class BaseItemDelegate<Item : AdapterItem<*>, ViewHolder : RecyclerView.ViewHolder>(
     private val itemClass: Class<Item>,
 ) {
     fun isApplicableForPosition(item: Any): Boolean {

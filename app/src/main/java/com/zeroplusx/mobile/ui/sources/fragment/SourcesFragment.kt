@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeroplusx.mobile.R
 import com.zeroplusx.mobile.databinding.FragmentListBinding
 import com.zeroplusx.mobile.domain.model.Source
+import com.zeroplusx.mobile.ui.articles.adapter.delegate.EmptyDelegate
 import com.zeroplusx.mobile.ui.core.adapter.DelegateAdapter
 import com.zeroplusx.mobile.ui.articles.adapter.delegate.ErrorDelegate
 import com.zeroplusx.mobile.ui.articles.adapter.delegate.ProgressDelegate
+import com.zeroplusx.mobile.ui.articles.adapter.item.EmptyItem
 import com.zeroplusx.mobile.ui.articles.adapter.item.ErrorItem
 import com.zeroplusx.mobile.ui.articles.adapter.item.ProgressItem
 import com.zeroplusx.mobile.ui.articles.fragment.ArticlesFragment
+import com.zeroplusx.mobile.ui.core.adapter.AdapterItem
 import com.zeroplusx.mobile.ui.core.model.SourceWrapper
 import com.zeroplusx.mobile.ui.sources.adapter.delegate.SourceDelegate
 import com.zeroplusx.mobile.ui.sources.adapter.item.SourceItem
@@ -37,14 +40,6 @@ class SourcesFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: SourcesViewModel by viewModels()
 
-    private val delegateAdapter = DelegateAdapter(
-        listOf(
-            SourceDelegate(this::navigateToArticleDetails),
-            ProgressDelegate(),
-            ErrorDelegate()
-        )
-    )
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,13 +54,25 @@ class SourcesFragment : Fragment() {
 
         binding.listView.layoutManager = LinearLayoutManager(requireContext())
         binding.listView.setHasFixedSize(true)
+        val delegateAdapter = DelegateAdapter<AdapterItem<*>>(
+            listOf(
+                SourceDelegate(this::navigateToArticleDetails),
+                ProgressDelegate(),
+                ErrorDelegate(),
+                EmptyDelegate(),
+            )
+        )
         binding.listView.adapter = delegateAdapter
 
         viewModel.sourcesState
             .onEach { viewState ->
-                delegateAdapter.data = when (viewState) {
+                val items = when (viewState) {
                     is SourcesViewState.Sources -> {
-                        viewState.articles.map { SourceItem(it) }
+                        if (viewState.articles.isEmpty()) {
+                            listOf(EmptyItem)
+                        } else {
+                            viewState.articles.map { SourceItem(it) }
+                        }
                     }
                     is SourcesViewState.Error -> {
                         listOf(ErrorItem(viewState.error))
@@ -74,7 +81,7 @@ class SourcesFragment : Fragment() {
                         listOf(ProgressItem)
                     }
                 }
-                delegateAdapter.notifyDataSetChanged()
+                delegateAdapter.setItems(items)
             }
             .launchIn(lifecycleScope)
     }

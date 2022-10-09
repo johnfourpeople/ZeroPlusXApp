@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
         <entry key="app/src/main/res/layout/widget_article.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/widget_empty.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/widget_error.xml" value="0.13125" />
         <entry key="app/src/main/res/layout/widget_progress.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/widget_small_error.xml" value="0.28229166666666666" />

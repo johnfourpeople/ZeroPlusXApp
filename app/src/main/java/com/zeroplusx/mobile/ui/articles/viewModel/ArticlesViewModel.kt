@@ -20,7 +20,9 @@ class ArticlesViewModel @AssistedInject constructor(
         get() = articlesModel.state
 
     fun onNextPage() {
-        articlesModel.nextPage.invoke()
+        if ((articleListState.value as? ArticlesInteractor.State.Idle)?.canLoadMore == true) {
+            articlesModel.nextPage.invoke()
+        }
     }
 
     fun onRetry() {
