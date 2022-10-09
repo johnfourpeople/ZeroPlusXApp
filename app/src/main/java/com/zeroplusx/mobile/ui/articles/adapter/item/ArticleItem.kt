@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.listing.adapter.item
+package com.zeroplusx.mobile.ui.articles.adapter.item
 
 import com.zeroplusx.mobile.domain.model.Article
 

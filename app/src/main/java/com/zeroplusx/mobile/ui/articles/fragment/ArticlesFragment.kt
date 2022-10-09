@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.listing.fragment
+package com.zeroplusx.mobile.ui.articles.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,17 +12,17 @@ import com.zeroplusx.mobile.databinding.FragmentListBinding
 import com.zeroplusx.mobile.domain.interactor.ArticlesInteractor
 import com.zeroplusx.mobile.ui.core.OnBottomReachedListener
 import com.zeroplusx.mobile.ui.core.adapter.DelegateAdapter
-import com.zeroplusx.mobile.ui.listing.adapter.delegate.ArticleDelegate
-import com.zeroplusx.mobile.ui.listing.adapter.delegate.ErrorDelegate
-import com.zeroplusx.mobile.ui.listing.adapter.delegate.ProgressDelegate
-import com.zeroplusx.mobile.ui.listing.adapter.delegate.SmallErrorDelegate
-import com.zeroplusx.mobile.ui.listing.adapter.delegate.SmallProgressDelegate
-import com.zeroplusx.mobile.ui.listing.adapter.item.ArticleItem
-import com.zeroplusx.mobile.ui.listing.adapter.item.ErrorItem
-import com.zeroplusx.mobile.ui.listing.adapter.item.ProgressItem
-import com.zeroplusx.mobile.ui.listing.adapter.item.SmallErrorItem
-import com.zeroplusx.mobile.ui.listing.adapter.item.SmallProgressItem
-import com.zeroplusx.mobile.ui.listing.viewModel.ArticlesViewModel
+import com.zeroplusx.mobile.ui.articles.adapter.delegate.ArticleDelegate
+import com.zeroplusx.mobile.ui.articles.adapter.delegate.ErrorDelegate
+import com.zeroplusx.mobile.ui.articles.adapter.delegate.ProgressDelegate
+import com.zeroplusx.mobile.ui.articles.adapter.delegate.SmallErrorDelegate
+import com.zeroplusx.mobile.ui.articles.adapter.delegate.SmallProgressDelegate
+import com.zeroplusx.mobile.ui.articles.adapter.item.ArticleItem
+import com.zeroplusx.mobile.ui.articles.adapter.item.ErrorItem
+import com.zeroplusx.mobile.ui.articles.adapter.item.ProgressItem
+import com.zeroplusx.mobile.ui.articles.adapter.item.SmallErrorItem
+import com.zeroplusx.mobile.ui.articles.adapter.item.SmallProgressItem
+import com.zeroplusx.mobile.ui.articles.viewModel.ArticlesViewModel
 import com.zeroplusx.mobile.ui.model.SourceWrapper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn

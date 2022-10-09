@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.listing.viewModel
+package com.zeroplusx.mobile.ui.articles.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

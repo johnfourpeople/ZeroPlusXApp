@@ -34,7 +34,9 @@ class ArticlesInteractor @Inject constructor(private val repository: ArticlesRep
                     mutableStateFlow.value = State.Loading(currentState.articles, newPage)
                     loadingJob = coroutineScope.launch {
                         runCatchingWithoutCancellation { repository.getArticles(source, newPage) }
-                            .onSuccess { mutableStateFlow.value = State.Idle(currentState.articles + it, newPage) }
+                            .onSuccess { articles ->
+                                mutableStateFlow.value = State.Idle(currentState.articles + articles, newPage)
+                            }
                             .onFailure { mutableStateFlow.value = State.Error(currentState.articles, newPage, it) }
                     }
                 }

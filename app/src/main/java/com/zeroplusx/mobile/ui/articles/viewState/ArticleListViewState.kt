@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.listing.viewState
+package com.zeroplusx.mobile.ui.articles.viewState
 
 import com.zeroplusx.mobile.domain.model.Article
 

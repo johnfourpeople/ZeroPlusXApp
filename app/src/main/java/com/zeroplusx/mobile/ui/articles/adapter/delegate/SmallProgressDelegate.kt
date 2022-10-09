@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.listing.adapter.delegate
+package com.zeroplusx.mobile.ui.articles.adapter.delegate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zeroplusx.mobile.databinding.WidgetSmallProgressBinding
 import com.zeroplusx.mobile.ui.core.adapter.BaseItemDelegate
 import com.zeroplusx.mobile.ui.core.adapter.BindingViewHolder
-import com.zeroplusx.mobile.ui.listing.adapter.item.SmallProgressItem
+import com.zeroplusx.mobile.ui.articles.adapter.item.SmallProgressItem
 
 class SmallProgressDelegate : BaseItemDelegate<SmallProgressItem, BindingViewHolder<WidgetSmallProgressBinding>>(
     SmallProgressItem::class.java

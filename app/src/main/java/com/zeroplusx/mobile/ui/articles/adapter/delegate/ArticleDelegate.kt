@@ -1,4 +1,4 @@
-package com.zeroplusx.mobile.ui.listing.adapter.delegate
+package com.zeroplusx.mobile.ui.articles.adapter.delegate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.zeroplusx.mobile.R
 import com.zeroplusx.mobile.databinding.WidgetArticleBinding
 import com.zeroplusx.mobile.ui.core.adapter.BaseItemDelegate
 import com.zeroplusx.mobile.ui.core.adapter.BindingViewHolder
-import com.zeroplusx.mobile.ui.listing.adapter.item.ArticleItem
+import com.zeroplusx.mobile.ui.articles.adapter.item.ArticleItem
 
 class ArticleDelegate : BaseItemDelegate<ArticleItem, BindingViewHolder<WidgetArticleBinding>>(
     ArticleItem::class.java

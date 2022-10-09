@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/ArticlesFragment"
-        android:name="com.zeroplusx.mobile.ui.listing.fragment.ArticlesFragment"
+        android:name="com.zeroplusx.mobile.ui.articles.fragment.ArticlesFragment"
         android:label="@string/articles_fragment_label"
         tools:layout="@layout/fragment_list">
     </fragment>
