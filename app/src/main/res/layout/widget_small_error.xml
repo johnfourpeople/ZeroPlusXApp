@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingVertical="32dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:paddingHorizontal="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?selectableItemBackground">
 
     <TextView
         android:id="@+id/errorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="Some error occurred"/>
+        tools:text="Some error occurred" />
 
 </FrameLayout>
