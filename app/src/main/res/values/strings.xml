@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ZeroPlusX app</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="sources_fragment_label">Sources</string>
+    <string name="articles_fragment_label">Articles</string>
+</resources>

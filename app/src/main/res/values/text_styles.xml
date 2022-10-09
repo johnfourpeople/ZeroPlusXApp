@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.AppCompat.TextView.Title">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Widget.AppCompat.TextView.Link">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?android:textColorLink</item>
+    </style>
+</resources>
