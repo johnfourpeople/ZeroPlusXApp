@@ -30,6 +30,7 @@ class ArticleDelegate : BaseItemDelegate<ArticleItem, BindingViewHolder<WidgetAr
                 thumbnailView.load(
                     item.article.thumbnail,
                     builder = { placeholder(R.drawable.image_placeholder) })
+                thumbnailView.contentDescription = item.article.title
                 thumbnailView.isVisible = true
             } else {
                 thumbnailView.isVisible = false

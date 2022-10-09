@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/image_placeholder.xml" value="0.1425" />
+        <entry key="app/src/main/res/layout-land/widget_article.xml" value="0.22708333333333333" />
+        <entry key="app/src/main/res/layout-land/widget_source.xml" value="0.22708333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.25" />
